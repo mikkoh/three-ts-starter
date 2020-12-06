@@ -1,4 +1,3 @@
-import anime from "animejs";
 import {
   IcosahedronBufferGeometry,
   Mesh,
@@ -9,8 +8,7 @@ import {
   TextureLoader,
   WebGLRenderer
 } from "three";
-// tslint:disable-next-line
-const Stats = require("stats.js");
+import Stats from 'stats.js';
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const renderer = new WebGLRenderer({ canvas });
@@ -37,7 +35,7 @@ const material = new MeshMatcapMaterial({
 const mesh = new Mesh(geometry, material);
 scene.add(mesh);
 
-const textureLoader = new TextureLoader().load(
+new TextureLoader().load(
   "./resources/matcap.jpg",
   (texture: Texture) => {
     material.matcap = texture;
@@ -45,20 +43,7 @@ const textureLoader = new TextureLoader().load(
   }
 );
 
-const animation = anime({
-  targets: mesh.rotation,
-  x: 2 * Math.PI,
-  z: 2 * Math.PI,
-  duration: 3000,
-  easing: "easeOutBounce",
-  loop: true,
-  autoplay: true,
-  complete: () => {
-    mesh.rotation.set(0, 0, 0);
-  }
-});
-
-window.addEventListener("resize", (event: UIEvent) => {
+window.addEventListener("resize", (_event: UIEvent) => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 
