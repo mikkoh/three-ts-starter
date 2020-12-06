@@ -1,64 +1,43 @@
-import {
-  IcosahedronBufferGeometry,
-  Mesh,
-  MeshMatcapMaterial,
-  PerspectiveCamera,
-  Scene,
-  Texture,
-  TextureLoader,
-  WebGLRenderer
-} from "three";
-import Stats from 'stats.js';
+import { IcosahedronBufferGeometry, Mesh, MeshMatcapMaterial } from "three";
+import Stats from "stats.js";
 
-const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-const renderer = new WebGLRenderer({ canvas });
-renderer.setSize(canvas.offsetWidth, canvas.offsetHeight, false);
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.autoClear = false;
+import { App, AppTimeParams } from "./App";
+import { textureLoader } from "./loaders/textures";
 
+const app = new App();
 const stats = new Stats();
-canvas.parentElement.appendChild(stats.dom);
 
-const scene = new Scene();
-const camera = new PerspectiveCamera(
-  60,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
-camera.position.z = 5;
+async function initAndStart() {
+  let mesh: Mesh;
 
-const geometry = new IcosahedronBufferGeometry();
-const material = new MeshMatcapMaterial({
-  matcap: Texture.DEFAULT_IMAGE
-});
-const mesh = new Mesh(geometry, material);
-scene.add(mesh);
+  await app.initialize({
+    canvas: document.querySelector("#appCanvas"),
+    async onInitialize(app: App) {
+      app.renderer.domElement.parentElement.appendChild(stats.dom);
 
-new TextureLoader().load(
-  "./resources/matcap.jpg",
-  (texture: Texture) => {
-    material.matcap = texture;
-    material.needsUpdate = true;
-  }
-);
+      const scene = app.scene;
+      const geometry = new IcosahedronBufferGeometry();
+      const matcap = await textureLoader("./resources/matcap.jpg");
+      const material = new MeshMatcapMaterial({
+        matcap,
+      });
+      mesh = new Mesh(geometry, material);
+      scene.add(mesh);
+    },
+    onBeforeRender(time: AppTimeParams) {
+      stats.begin();
+      mesh.rotateY(time.deltaTimeSeconds * Math.PI * 0.5);
+    },
+    onAfterRender() {
+      stats.end();
+    },
+    onResize(params) {
+      console.log(params);
+    },
+  });
 
-window.addEventListener("resize", (_event: UIEvent) => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(canvas.offsetWidth, canvas.offsetHeight, false);
-});
-
-function render() {
-  renderer.clearColor();
-  renderer.render(scene, camera);
+  app.start();
+  console.log("start");
 }
 
-function animate() {
-  requestAnimationFrame(animate);
-  stats.begin();
-  render();
-  stats.end();
-}
-animate();
+initAndStart();
