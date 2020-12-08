@@ -1,12 +1,18 @@
-# three-ts-template
+# three-ts-starter
 
-Personal template project for three.js + typescript development.
+A three.js starter repo
 
-![screenshot](screenshot.png)
+Features:
+
+- Builds using webpack
+- Uses [glslify](https://github.com/glslify/glslify)
+  - [src/object3d/Sphere.ts](https://github.com/mikkoh/three-ts-starter/blob/master/src/object3d/Sphere.ts#L16-L33) creates a custom material with shaders that extend [Three.js Shader Lib Shaders](https://github.com/mrdoob/three.js/tree/dev/src/renderers/shaders/ShaderLib)
+
+![screenshot](screenshot.jpg)
 
 ## References
 
-- Myself ;)
+- [amsXYZ three-ts-template (original fork)](https://github.com/amsXYZ/three-ts-template)
 
 ## License
 
