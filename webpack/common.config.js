@@ -5,18 +5,23 @@ module.exports = {
   mode: "production",
   output: {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "../dist")
+    path: path.resolve(__dirname, "../dist"),
   },
   module: {
     rules: [
       {
+        test: /\.(glsl|vs|fs|vert|frag)$/,
+        exclude: /node_modules/,
+        use: ["raw-loader", "glslify-loader"],
+      },
+      {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        loader: "ts-loader"
-      }
-    ]
+        loader: "ts-loader",
+      },
+    ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
-  }
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
+  },
 };
