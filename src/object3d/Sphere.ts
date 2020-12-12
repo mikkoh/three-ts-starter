@@ -1,17 +1,17 @@
 import {
   IcosahedronBufferGeometry,
   Mesh,
-  Texture,
   MeshMatcapMaterial,
-  UniformsUtils,
   ShaderLib,
+  Texture,
   Uniform,
-} from "three";
+  UniformsUtils,
+} from 'three';
 
-import { CustomMaterial } from "../materials/CustomMaterial";
+import {CustomMaterial} from '../materials/CustomMaterial';
 
-import vertexShader from "./Sphere/sphere.vert";
-import fragmentShader from "./Sphere/sphere.frag";
+import fragmentShader from './Sphere/sphere.frag';
+import vertexShader from './Sphere/sphere.vert';
 
 class SphereMaterial extends CustomMaterial(MeshMatcapMaterial, {
   vertexShader,
@@ -24,11 +24,11 @@ class SphereMaterial extends CustomMaterial(MeshMatcapMaterial, {
   ]),
 }) {
   get time(): number {
-    return this.getCustomUniform("time");
+    return this.getCustomUniform('time');
   }
 
   set time(value: number) {
-    this.setCustomUniform("time", value);
+    this.setCustomUniform('time', value);
   }
 }
 
@@ -41,7 +41,7 @@ export class Sphere extends Mesh {
     this.material.time = value;
   }
 
-  material: SphereMaterial;
+  public material: SphereMaterial;
 
   constructor(matcap: Texture) {
     const geometry = new IcosahedronBufferGeometry();
