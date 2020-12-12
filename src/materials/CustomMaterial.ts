@@ -1,4 +1,4 @@
-import { Shader, IUniform, WebGLRenderer, Material } from "three";
+import {IUniform, Material, Shader, WebGLRenderer} from 'three';
 
 interface CustomUniforms {
   [uniform: string]: IUniform;
@@ -29,7 +29,7 @@ function CustomMaterial<TMaterial extends Constructor>(
       this.customUniforms = customShader.uniforms;
     }
 
-    onBeforeCompile(shader: Shader, _renderer: WebGLRenderer): void {
+    public onBeforeCompile(shader: Shader, _renderer: WebGLRenderer): void {
       if (this.customUniforms) {
         for (const [key, value] of Object.entries(this.customUniforms)) {
           shader.uniforms[key] = value;
@@ -59,4 +59,4 @@ function CustomMaterial<TMaterial extends Constructor>(
   };
 }
 
-export { CustomMaterial };
+export {CustomMaterial};

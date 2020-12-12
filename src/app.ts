@@ -1,5 +1,5 @@
-import { WebGLRenderer, Scene, PerspectiveCamera, Clock } from "three";
-import bind from "bind-decorator";
+import bind from 'bind-decorator';
+import {Clock, PerspectiveCamera, Scene, WebGLRenderer} from 'three';
 
 export interface AppTimeParams {
   deltaTime: number;
@@ -9,7 +9,7 @@ export interface AppTimeParams {
 }
 
 interface OptionalAppParams {
-  onResize?: (resizeParams: { width: number; height: number }) => void;
+  onResize?: (resizeParams: {width: number; height: number}) => void;
   onBeforeRender?: (updateParams: AppTimeParams) => void;
   onAfterRender?: () => void;
 }
@@ -45,14 +45,14 @@ export class App {
   private _scene: Scene;
   private _camera: PerspectiveCamera;
 
-  async initialize(params: AppParams): Promise<App> {
+  public async initialize(params: AppParams): Promise<App> {
     this.params = {
       ...DEFAULT_APP_PARAMS,
       ...params,
     };
-    const { canvas } = params;
+    const {canvas} = params;
 
-    const renderer = new WebGLRenderer({ canvas });
+    const renderer = new WebGLRenderer({canvas});
     this._renderer = renderer;
 
     renderer.setSize(canvas.offsetWidth, canvas.offsetHeight, false);
@@ -71,7 +71,7 @@ export class App {
     this._camera.position.z = 5;
 
     this.onResize();
-    window.addEventListener("resize", this.onResize);
+    window.addEventListener('resize', this.onResize);
 
     this.clock = new Clock(false);
 
@@ -80,20 +80,20 @@ export class App {
     return this;
   }
 
-  start() {
+  public start() {
     this.running = true;
     this.clock.start();
     this.onAimationFrame();
   }
 
-  stop() {
+  public stop() {
     this.running = false;
     this.clock.stop();
   }
 
-  dispose() {
+  public dispose() {
     this.stop();
-    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener('resize', this.onResize);
     this._renderer.dispose();
   }
 
@@ -131,6 +131,6 @@ export class App {
     this._camera.updateProjectionMatrix();
 
     this._renderer.setSize(width, height, false);
-    this.params.onResize({ width, height });
+    this.params.onResize({width, height});
   }
 }

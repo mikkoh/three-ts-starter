@@ -1,4 +1,4 @@
-import { Texture, TextureLoader } from "three";
+import {Texture, TextureLoader} from 'three';
 
 export function textureLoader(
   url: string,
