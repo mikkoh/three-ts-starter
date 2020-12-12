@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Personal template project for three.js + typescript development.",
   "main": "index.js",
-  "author": "Andrés Valencia Téllez",
+  "author": "Mikko Haapoja",
   "license": "MIT",
   "scripts": {
     "prettier": "prettier -l \"**/*.ts\" \"**/*.tsx\" \"**/*.json\"",
