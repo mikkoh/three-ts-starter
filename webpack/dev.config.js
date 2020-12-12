@@ -1,38 +1,38 @@
-const merge = require("webpack-merge");
-const path = require("path");
+const merge = require('webpack-merge');
+const path = require('path');
 
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const commonConfig = require("./common.config");
+const commonConfig = require('./common.config');
 
 const config = merge(commonConfig, {
-  mode: "development",
+  mode: 'development',
   module: {
     rules: [
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.js$/,
-        loader: "source-map-loader"
-      }
-    ]
+        loader: 'source-map-loader',
+      },
+    ],
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   devServer: {
-    contentBase: "./dist"
+    contentBase: './dist',
   },
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: path.join(__dirname, "../src/resources"),
-        to: "resources",
-        toType: "dir"
-      }
+        from: path.join(__dirname, '../src/resources'),
+        to: 'resources',
+        toType: 'dir',
+      },
     ]),
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
-    })
-  ]
+      template: './src/index.html',
+    }),
+  ],
 });
 
 module.exports = config;

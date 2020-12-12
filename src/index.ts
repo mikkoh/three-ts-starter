@@ -37,4 +37,4 @@ async function initAndStart() {
   console.log('start');
 }
 
-initAndStart();
+window.addEventListener('DOMContentLoaded', initAndStart);
